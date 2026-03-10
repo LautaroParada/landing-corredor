@@ -106,7 +106,7 @@ const DopDopLanding = () => {
           <div className="max-w-3xl">
             <h1 className="text-6xl md:text-8xl font-bold mb-4">DopDop</h1>
             <h2 className="text-3xl md:text-5xl font-light mb-8" >
-              Don't OverPay / No Pagues de más
+              Don&apos;t OverPay / No Pagues de más
             </h2>
             <p className="text-xl md:text-2xl text-gray-200 leading-relaxed">
               Nuestro compromiso principal es proteger tu patrimonio a través de la eficiencia
@@ -244,7 +244,7 @@ const DopDopLanding = () => {
 
             <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 rounded-r-lg" style={{ borderLeftColor: '#010194' }}>
               <p className="text-lg font-semibold text-gray-800">
-                No adivinamos el precio de tu propiedad. Usamos tecnología para encontrar el 'sweet spot' (punto óptimo) que maximiza tu ganancia sin castigar la velocidad de cierre.
+                No adivinamos el precio de tu propiedad. Usamos tecnología para encontrar el &apos;sweet spot&apos; (punto óptimo) que maximiza tu ganancia sin castigar la velocidad de cierre.
               </p>
             </div>
           </div>
