@@ -170,3 +170,22 @@ body {
   }
 }
 
+/* =========================================================================
+   Animación de entrada hero — PR 2
+   prefers-reduced-motion ya cubierto por el global de PR 0 (animation-duration: 0.01ms)
+   ========================================================================= */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up var(--duration-slow) var(--ease-out) both;
+}
+

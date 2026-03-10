@@ -106,9 +106,9 @@ const DopDopLanding = () => {
 
         {/* Hero Content */}
         <div className="container mx-auto px-6 z-10 text-white">
-          <div className="max-w-3xl">
-            <h1 className="text-6xl md:text-8xl font-bold mb-4">DopDop</h1>
-            <h2 className="text-3xl md:text-5xl font-light mb-8" >
+          <div className="max-w-3xl animate-fade-up">
+            <h1 className="font-bold mb-4" style={{ fontSize: 'var(--text-hero)' }}>DopDop</h1>
+            <h2 className="font-light mb-8" style={{ fontSize: 'var(--text-h1)' }}>
               Don&apos;t OverPay / No Pagues de más
             </h2>
             <p className="text-xl md:text-2xl text-gray-200 leading-relaxed">
@@ -170,7 +170,7 @@ const DopDopLanding = () => {
               <ServiceItem text="Nuestros valores incluyen IVA" bold />
             </div>
 
-            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)' }}>
+            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)', transform: 'translateX(var(--offset-human-sm))' }}>
               <p className="text-lg font-semibold text-gray-800">
                 En una propiedad de 5.000 UF, ahorras 40 UF con nosotros comparado con el 2% tradicional
               </p>
@@ -216,7 +216,7 @@ const DopDopLanding = () => {
               <ServiceItem text="Nuestros valores incluyen IVA." bold />
             </div>
 
-            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)' }}>
+            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)', transform: 'translateX(var(--offset-human-sm))' }}>
               <p className="text-lg font-semibold text-gray-800">
                 Al no cobrar comisión al arrendatario, atraemos a 3 veces más interesados. Esto te permite ser mucho más exigente en la evaluación de antecedentes y encontrar al arrendatario ideal más rápido.
               </p>
@@ -261,7 +261,7 @@ const DopDopLanding = () => {
               <ServiceItem text="Nuestros valores incluyen IVA." bold />
             </div>
 
-            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)' }}>
+            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)', transform: 'translateX(var(--offset-human-sm))' }}>
               <p className="text-lg font-semibold text-gray-800">
                 No adivinamos el precio de tu propiedad. Usamos tecnología para encontrar el &apos;sweet spot&apos; (punto óptimo) que maximiza tu ganancia sin castigar la velocidad de cierre.
               </p>
@@ -308,7 +308,7 @@ const DopDopLanding = () => {
               <ServiceItem text="Nuestros valores incluyen IVA." bold />
             </div>
 
-            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)' }}>
+            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)', transform: 'translateX(var(--offset-human-sm))' }}>
               <p className="text-lg font-semibold text-gray-800">
                 ¿Por qué pagar más si tu propiedad vale más? En el modelo tradicional, si tu arriendo sube, tu corredor gana más. En DopDop el esfuerzo es el mismo, por eso el precio es el mismo: 1,5 UF siempre. Sin porcentajes, sin sorpresas.
               </p>
