@@ -1,11 +1,49 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Home, Menu, X, Phone, Mail, MapPin, Facebook, Instagram, Linkedin, MessageCircle, Youtube } from 'lucide-react';
 
 const DopDopLanding = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  
+  const [activeSection, setActiveSection] = useState('');
+  const observerRef = useRef(null);
+
+  const navItems = [
+    { id: 'quienes-somos', label: 'Quiénes Somos' },
+    { id: 'venta', label: 'Venta' },
+    { id: 'arriendo', label: 'Arriendo' },
+    { id: 'tasacion', label: 'Tasación' },
+    { id: 'administracion', label: 'Administración' },
+    { id: 'contacto', label: 'Contacto' }
+  ];
+
+  useEffect(() => {
+    const sectionIds = navItems.map((item) => item.id);
+
+    const handleIntersect = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    observerRef.current = new IntersectionObserver(handleIntersect, {
+      root: null,
+      rootMargin: '-40% 0px -55% 0px',
+      threshold: 0,
+    });
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observerRef.current.observe(el);
+    });
+
+    return () => {
+      if (observerRef.current) observerRef.current.disconnect();
+    };
+  }, []);
+
   // Environment variables simulation
   const WHATSAPP_NUMBER = '56912345678'; // Replace with actual number
   const EMAIL = 'contacto@dopdop.cl';
@@ -26,15 +64,6 @@ const DopDopLanding = () => {
     window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}`;
   };
 
-  const navItems = [
-    { id: 'quienes-somos', label: 'Quiénes Somos' },
-    { id: 'venta', label: 'Venta' },
-    { id: 'arriendo', label: 'Arriendo' },
-    { id: 'tasacion', label: 'Tasación' },
-    { id: 'administracion', label: 'Administración' },
-    { id: 'contacto', label: 'Contacto' }
-  ];
-
   return (
     <div className="min-h-screen bg-white">
       {/* Header / Navbar */}
@@ -53,8 +82,13 @@ const DopDopLanding = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
-                  style={{ ':hover': { color: '#010194' } }}
+                  aria-current={activeSection === item.id ? 'page' : undefined}
+                  className={`transition-colors duration-200 font-medium pb-1 ${
+                    activeSection === item.id
+                      ? 'text-white border-b-2'
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                  style={activeSection === item.id ? { borderBottomColor: 'var(--color-brand)' } : {}}
                 >
                   {item.label}
                 </button>
@@ -73,7 +107,7 @@ const DopDopLanding = () => {
 
           {/* Mobile Menu */}
           {menuOpen && (
-            <div className="md:hidden mt-4 pb-4 border-t border-gray-800 pt-4">
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-800 pt-4 mobile-menu-enter">
               {navItems.map((item) => (
                 <button
                   key={item.id}
@@ -142,6 +176,40 @@ const DopDopLanding = () => {
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
               Somos la primera corredora de propiedades Low-Cost de Chile. Nacimos para terminar con las comisiones del 2%, 10% y 50% que hoy no tienen justificación técnica. En DopDop utilizamos tecnología de vanguardia para eliminar ineficiencias y traspasar ese ahorro directamente a nuestros clientes. <span className="font-bold">No cobramos barato, cobramos lo justo.</span>
             </p>
+            {/* Tabla de comparación — PR 3 */}
+            <div className="mt-12 overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr>
+                    <th className="py-3 px-4 bg-gray-100 text-gray-600 font-semibold text-sm uppercase tracking-wide border-b-2 border-gray-200">Servicio</th>
+                    <th className="py-3 px-4 bg-gray-100 text-gray-600 font-semibold text-sm uppercase tracking-wide border-b-2 border-gray-200 text-center">Corredora Tradicional</th>
+                    <th className="py-3 px-4 text-white font-semibold text-sm uppercase tracking-wide border-b-2 text-center" style={{ backgroundColor: 'var(--color-brand)', borderBottomColor: 'var(--color-brand-hover)' }}>DopDop</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-3 px-4 text-gray-700 font-medium">Venta de propiedad</td>
+                    <td className="py-3 px-4 text-gray-500 text-center">2% del valor (100 UF en prop. de 5.000 UF)</td>
+                    <td className="py-3 px-4 text-center font-semibold" style={{ color: 'var(--color-brand)' }}>60 UF fijas</td>
+                  </tr>
+                  <tr className="border-b border-gray-100 bg-gray-50">
+                    <td className="py-3 px-4 text-gray-700 font-medium">Arriendo</td>
+                    <td className="py-3 px-4 text-gray-500 text-center">50–100% del primer mes</td>
+                    <td className="py-3 px-4 text-center font-semibold" style={{ color: 'var(--color-brand)' }}>15 UF fijas</td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-3 px-4 text-gray-700 font-medium">Administración mensual</td>
+                    <td className="py-3 px-4 text-gray-500 text-center">8–10% del arriendo mensual</td>
+                    <td className="py-3 px-4 text-center font-semibold" style={{ color: 'var(--color-brand)' }}>1,5 UF fijas</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-4 text-gray-700 font-medium">Comisión al comprador/arrendatario</td>
+                    <td className="py-3 px-4 text-gray-500 text-center">Sí (hasta 2%)</td>
+                    <td className="py-3 px-4 text-center font-bold" style={{ color: 'var(--color-success)' }}>0%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
@@ -422,22 +490,22 @@ const DopDopLanding = () => {
             <div>
               <h4 className="text-white font-bold mb-4">Síguenos en:</h4>
               <div className="flex flex-wrap gap-4">
-                <a href="#" className="hover:text-white transition-colors" aria-label="Facebook">
+                <a href="#" aria-disabled="true" tabIndex={-1} className="hover:text-white transition-colors" aria-label="Facebook">
                   <Facebook className="w-6 h-6" />
                 </a>
-                <a href="#" className="hover:text-white transition-colors" aria-label="Instagram">
+                <a href="#" aria-disabled="true" tabIndex={-1} className="hover:text-white transition-colors" aria-label="Instagram">
                   <Instagram className="w-6 h-6" />
                 </a>
-                <a href="#" className="hover:text-white transition-colors" aria-label="LinkedIn">
+                <a href="#" aria-disabled="true" tabIndex={-1} className="hover:text-white transition-colors" aria-label="LinkedIn">
                   <Linkedin className="w-6 h-6" />
                 </a>
                 <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="hover:text-white transition-colors" aria-label="WhatsApp">
                   <MessageCircle className="w-6 h-6" />
                 </a>
-                <a href="#" className="hover:text-white transition-colors" aria-label="YouTube">
+                <a href="#" aria-disabled="true" tabIndex={-1} className="hover:text-white transition-colors" aria-label="YouTube">
                   <Youtube className="w-6 h-6" />
                 </a>
-                <a href="#" className="hover:text-white transition-colors" aria-label="TikTok">
+                <a href="#" aria-disabled="true" tabIndex={-1} className="hover:text-white transition-colors" aria-label="TikTok">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
                   </svg>
