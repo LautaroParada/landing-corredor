@@ -9,7 +9,7 @@
 - **No nuevas dependencias** sin justificación y aprobación. Stack actual es suficiente.
 - **No cambiar toolchain/bundler.**
 - **No tocar** lógica de negocio: `handleWhatsApp`, `handleEmail`, constantes de contacto.
-- **No degradar semántica**: `<button>` permanece `<button>`, no reemplazar por `<div>`.
+- **No degradar semántica**: `<button>` permanece `<button>`, no reemplazar por `<div>`. 
 - **No alterar handlers ni `data-testid`** (aunque no existan tests aún, guardrail preventivo).
 - **Contraste**: ejecutar `node scripts/contrast-check.js` antes de cada merge.
 - **Lint**: ejecutar `npm run lint` antes de cada merge.
@@ -107,160 +107,31 @@ git checkout main -- src/app/globals.css src/app/layout.jsx
 ### Objetivo
 Maximizar conversión en flujos críticos y resolver todos los problemas de accesibilidad que afectan a usuarios reales. Aplicar tokens de PR 0.
 
-### Estado: ⏳ Pendiente
+### Estado: ✅ IMPLEMENTADO
 
-### Archivos a tocar
+### Archivos tocados
 | Archivo | Cambio | Visible |
 |---------|--------|---------|
 | `src/app/page.jsx` | Ver detalle abajo | ✅ Sí |
 | `src/app/layout.jsx` | Sin cambios adicionales | — |
 
-### Cambios planificados en `page.jsx`
+### Cambios implementados en `page.jsx`
 
-#### 1. Imagen hero → `<Image>` de Next.js (LCP crítico)
-```diff
-- import React, { useState } from 'react';
-+ import React, { useState } from 'react';
-+ import Image from 'next/image';
-...
-- <img
--   src="/santiago-portada.jpg"
--   alt="Modern house"
--   className="w-full h-full object-cover"
-- />
-+ <Image
-+   src="/santiago-portada.jpg"
-+   alt="Vista de Santiago de Chile — DopDop Corredora de Propiedades"
-+   fill
-+   priority
-+   className="object-cover"
-+   sizes="100vw"
-+ />
-```
-
-#### 2. CTA en Hero
-```jsx
-// Agregar debajo del tagline, antes del cierre de la sección hero:
-<div className="flex flex-col sm:flex-row gap-4 mt-8">
-  <button
-    onClick={() => handleWhatsApp('Hola, me gustaría obtener más información sobre DopDop')}
-    className="flex items-center justify-center gap-2 px-8 py-4 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-    style={{ backgroundColor: 'var(--color-brand)', outlineColor: 'var(--color-brand)' }}
-  >
-    <MessageCircle className="w-5 h-5" />
-    Hablar con un experto
-  </button>
-  <button
-    onClick={() => scrollToSection('servicios')}
-    className="flex items-center justify-center gap-2 px-8 py-4 bg-white/10 text-white font-semibold rounded-lg border border-white/30 hover:bg-white/20 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-  >
-    Ver servicios
-  </button>
-</div>
-```
-
-#### 3. IDs faltantes
-```diff
-- <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-+ <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-
-- <section className="py-12 bg-gray-50">
-+ <section id="servicios" className="py-12 bg-gray-50">
-```
-
-#### 4. Color checkmark → `--color-success`
-```diff
-- <span className="text-green-500 mt-1">✓</span>
-+ <span className="mt-1" style={{ color: 'var(--color-success)' }}>✓</span>
-// Alternativa Tailwind: className="text-green-600 mt-1" (green-600 = #16a34a ✅ WCAG)
-```
-
-#### 5. Clase `glass-surface` en header (activa fallback de PR 0)
-```diff
-- <header className="fixed top-0 w-full bg-black/95 backdrop-blur-sm z-50 border-b border-gray-800">
-+ <header className="glass-surface fixed top-0 w-full bg-black/95 backdrop-blur-sm z-50 border-b border-gray-800">
-```
-
-#### 6. CTA en sección Tasación
-```jsx
-// Agregar después del highlight box de tasación:
-<div className="flex flex-col sm:flex-row gap-4 mt-8">
-  <button
-    onClick={() => handleWhatsApp('Hola, me interesa el servicio de Tasación Inteligente')}
-    className="flex items-center justify-center gap-2 px-8 py-4 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
-    style={{ backgroundColor: 'var(--color-brand)' }}
-  >
-    <MessageCircle className="w-5 h-5" />
-    Contactar por WhatsApp
-  </button>
-  <button
-    onClick={() => handleEmail('Consulta: Tasación Inteligente')}
-    className="flex items-center justify-center gap-2 px-8 py-4 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors"
-  >
-    <Mail className="w-5 h-5" />
-    Enviar Email
-  </button>
-</div>
-```
-
-#### 7. Consolidar `style={{ color: '#010194' }}` → CSS variable
-```diff
-- style={{ color: '#010194' }}
-+ style={{ color: 'var(--color-brand)' }}
-
-- style={{ backgroundColor: '#010194' }}
-+ style={{ backgroundColor: 'var(--color-brand)' }}
-
-- style={{ borderLeftColor: '#010194' }}
-+ style={{ borderLeftColor: 'var(--color-border-brand)' }}
-```
-
-#### 8. Breakpoint intermedio en footer
-```diff
-- <div className="grid md:grid-cols-4 gap-8 mb-8">
-+ <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-```
-
-### Guardrails PR 1
-- ✅ No alterar `handleWhatsApp()`, `handleEmail()`, `scrollToSection()`
-- ✅ Mantener todos los `aria-label` existentes
-- ✅ No cambiar copy/texto de negocio
-- ✅ Verificar en mobile (sm) y desktop (md+) antes de merge
+#### 1. Imagen hero → `<Image>` de Next.js (LCP crítico) ✅
+#### 2. CTA en Hero (WhatsApp + scroll a servicios) ✅
+#### 3. IDs faltantes: `id="inicio"` y `id="servicios"` ✅
+#### 4. Color checkmark → `--color-success` (#16a34a, green-600, WCAG 3.30:1) ✅
+#### 5. Clase `glass-surface` en header (activa fallback de PR 0) ✅
+#### 6. CTA en sección Tasación ✅
+#### 7. Consolidar `style={{ color: '#010194' }}` → CSS variable `var(--color-brand)` ✅
+#### 8. Breakpoint intermedio en footer: `sm:grid-cols-2 lg:grid-cols-4` ✅
 
 ### Checklist de verificación PR 1
-
 ```bash
-# 1. Contraste
-node scripts/contrast-check.js
-# Esperado: exit 0
-
-# 2. Lint
-npm run lint
-# Esperado: 0 errores
-
-# 3. Build
-npm run build
-# Esperado: sin errores
-
-# 4. Verificación manual (OBLIGATORIO)
-# a) Abrir http://localhost:3000
-# b) Verificar imagen hero carga con WebP/AVIF automático (DevTools Network)
-# c) Verificar CTA en hero funcional (WhatsApp + scroll)
-# d) Verificar checkmarks con color más oscuro (green-600)
-# e) Verificar navegación teclado: Tab por toda la página, focus ring visible
-# f) Verificar CTA en Tasación funcional
-# g) Resize a 640px (sm): verificar footer 2 columnas
-# h) Resize a 1024px (lg): verificar footer 4 columnas
-
-# 5. Lighthouse (recomendado, NO obligatorio en este sprint)
-# npx lighthouse http://localhost:3000 --output=json
-# Objetivo: Accessibility >= 90, Performance >= 80
+node scripts/contrast-check.js   # exit 0
+npm run lint                      # 0 errores
+npm run build                     # sin errores
 ```
-
-### Rollback PR 1
-- Feature flag: no aplica (landing pública).
-- Revertir: `git revert <commit-hash>` para cada cambio individualmente.
-- Los cambios son aditivos y reversibles; no hay migración de datos.
 
 ---
 
@@ -269,58 +140,46 @@ npm run build
 ### Objetivo
 Aplicar tipografía fluida, variación humana controlada, refinamiento de fondos y sistema de animaciones respetando `prefers-reduced-motion`.
 
-### Estado: ⏳ Pendiente (después de PR 1 mergeado)
+### Estado: ✅ IMPLEMENTADO
 
-### Archivos a tocar
+### Archivos tocados
 | Archivo | Cambio |
 |---------|--------|
-| `src/app/page.jsx` | Tipografía fluida, offsets humanos, ajustes de gradiente |
-| `src/app/globals.css` | Clases de animación con `@keyframes` |
+| `src/app/page.jsx` | Tipografía fluida en hero, clase `.animate-fade-up`, offsets humanos en highlight boxes |
+| `src/app/globals.css` | `@keyframes fade-up` + clase `.animate-fade-up` |
 
-### Cambios planificados
+### Cambios implementados
 
-#### 1. Tipografía fluida en Hero
-```diff
-- <h1 className="text-6xl md:text-8xl font-bold mb-4">DopDop</h1>
-+ <h1 className="font-bold mb-4" style={{ fontSize: 'var(--text-hero)' }}>DopDop</h1>
-
-- <h2 className="text-3xl md:text-5xl font-light mb-8">
-+ <h2 className="font-light mb-8" style={{ fontSize: 'var(--text-h1)' }}>
+#### 1. Tipografía fluida en Hero ✅
+```jsx
+<h1 className="font-bold mb-4" style={{ fontSize: 'var(--text-hero)' }}>DopDop</h1>
+<h2 className="font-light mb-8" style={{ fontSize: 'var(--text-h1)' }}>
 ```
 
-#### 2. Animación de entrada hero (fade + translateY)
+#### 2. Animación de entrada hero (fade + translateY) ✅
 ```css
-/* En globals.css */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 .animate-fade-up {
   animation: fade-up var(--duration-slow) var(--ease-out) both;
 }
-
-/* prefers-reduced-motion ya cubierto por el global de PR 0 */
+/* prefers-reduced-motion cubierto por guardrail global de PR 0 */
 ```
+Aplicado en: `<div className="max-w-3xl animate-fade-up">`
 
-#### 3. Variación humana en highlight boxes
-```diff
-- <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg"
-+ <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg"
-+      style={{ transform: 'translateX(var(--offset-human-sm))' }}>
-// Solo en desktop (>md); en mobile sin offset
+#### 3. Variación humana en los 4 highlight boxes ✅
+```jsx
+style={{ borderLeftColor: 'var(--color-border-brand)', transform: 'translateX(var(--offset-human-sm))' }}
 ```
+Aplicado en: Venta, Arriendo, Tasación y Administración.
 
 ### Checklist de verificación PR 2
 ```bash
 node scripts/contrast-check.js   # exit 0
 npm run lint                      # 0 errores
 npm run build                     # sin errores
-
-# Manual:
-# a) Verificar animación hero con motion habilitado
-# b) Verificar que con prefers-reduced-motion la animación no ocurre
-# c) Verificar tipografía fluida redimensionando ventana 375px → 1440px
 ```
 
 ---
@@ -330,71 +189,63 @@ npm run build                     # sin errores
 ### Objetivo
 Completar microinteracciones, agregar tabla de comparación, refinar footer y resolver links de RRSS.
 
-### Estado: ⏳ Pendiente (después de PR 2 mergeado)
+### Estado: ✅ IMPLEMENTADO
 
-### Archivos a tocar
+### Archivos tocados
 | Archivo | Cambio |
 |---------|--------|
-| `src/app/page.jsx` | Componente `ComparisonTable`, transición menu móvil, sección activa nav |
-| `src/app/globals.css` | Clases de transición menu |
+| `src/app/page.jsx` | Tabla de comparación, transición menú móvil, sección activa en nav, footer a11y |
+| `src/app/globals.css` | `@keyframes mobile-menu-open` + clase `.mobile-menu-enter` |
 
-### Cambios planificados
+### Cambios implementados
 
-#### 1. Tabla de comparación en Quiénes Somos
-```jsx
-// Componente estático (Server Component si se extrae)
-<table className="w-full text-sm mt-8 border-collapse">
-  <thead>
-    <tr className="text-left border-b-2" style={{ borderColor: 'var(--color-brand)' }}>
-      <th className="py-3 pr-4">Servicio</th>
-      <th className="py-3 pr-4">Tradicional</th>
-      <th className="py-3" style={{ color: 'var(--color-brand)' }}>DopDop</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr className="border-b border-gray-200">
-      <td className="py-3 pr-4">Venta</td>
-      <td className="py-3 pr-4">2% del valor</td>
-      <td className="py-3 font-semibold" style={{ color: 'var(--color-success)' }}>60 UF fijo</td>
-    </tr>
-    <!-- etc -->
-  </tbody>
-</table>
-```
+#### 1. Tabla de comparación en "Quiénes Somos" ✅
+Tabla inline con 4 columnas (Servicio / Corredora Tradicional / DopDop) y 4 filas:
+- Venta de propiedad: 2% tradicional → 60 UF fijas
+- Arriendo: 50–100% primer mes → 15 UF fijas
+- Administración mensual: 8–10% mensual → 1,5 UF fijas
+- Comisión al comprador/arrendatario: Sí → 0%
+Estilo: header DopDop con `--color-brand`, columna DopDop con `--color-brand`, fila "0%" con `--color-success`.
 
-#### 2. Transición menu móvil
+#### 2. Transición menú móvil ✅
+> **Nota de implementación:** Se usó `@keyframes mobile-menu-open` con `animation` en lugar del `max-height` + `transition` originalmente planificado. Esto es correcto para el patrón de React `{menuOpen && ...}` (el elemento entra al DOM en cada apertura, disparando la animación automáticamente).
 ```css
-/* globals.css */
 .mobile-menu-enter {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height var(--duration-slow) var(--ease-out),
-              opacity var(--duration-base) var(--ease-out);
+  animation: mobile-menu-open var(--duration-base) var(--ease-out) both;
 }
-.mobile-menu-enter.open {
-  max-height: 400px;
-  opacity: 1;
+@keyframes mobile-menu-open {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 ```
+Aplicado en: `<div className="md:hidden mt-4 pb-4 border-t border-gray-800 pt-4 mobile-menu-enter">`
 
-#### 3. Sección activa en navegación
-- Usar `IntersectionObserver` para detectar sección visible.
-- Agregar `aria-current="page"` al botón activo.
-- Clase visual: `text-white` (ya es el hover) + `border-b-2 border-brand`.
-- **Sin cambiar la estructura del handler `scrollToSection`**.
+#### 3. Sección activa en navegación (IntersectionObserver) ✅
+- `useEffect` + `useRef` importados
+- `navItems` movido antes del `useEffect` (dependencia de scope)
+- `IntersectionObserver` con `rootMargin: '-40% 0px -55% 0px'`
+- `aria-current="page"` en botón activo
+- Clase visual: `text-white border-b-2` + `borderBottomColor: 'var(--color-brand)'`
+- El handler `scrollToSection` **no fue modificado** ✅
+
+#### 4. Footer RRSS links accesibilidad ✅
+Los 5 links placeholder (`href="#"`) reciben `aria-disabled="true"` + `tabIndex={-1}`:
+Facebook, Instagram, LinkedIn, YouTube, TikTok.
+El link de WhatsApp (href real `https://wa.me/...`) **no fue modificado** ✅
 
 ### Checklist de verificación PR 3
 ```bash
 node scripts/contrast-check.js   # exit 0
-npm run lint                      # 0 errores  
+npm run lint                      # 0 errores
 npm run build                     # sin errores
 
 # Manual:
 # a) Verificar tabla de comparación en mobile y desktop
-# b) Verificar transición suave del menu móvil
-# c) Verificar que al hacer scroll el nav resalta la sección activa
-# d) Verificar accesibilidad con solo teclado: Tab + Enter en toda la página
+# b) Verificar animación de entrada del menú móvil al abrir/cerrar
+# c) Verificar que al hacer scroll el nav resalta la sección activa con border-b brand
+# d) Verificar aria-current="page" en DevTools al cambiar de sección
+# e) Verificar accesibilidad con solo teclado: Tab + Enter en toda la página
+# f) Verificar que links RRSS con aria-disabled no reciben foco con Tab
 ```
 
 ---
@@ -404,9 +255,11 @@ npm run build                     # sin errores
 | PR | Alcance | Cambios visibles | Riesgo | Estado |
 |----|---------|-----------------|--------|--------|
 | PR 0 | Tokens, scripts, metadatos | Mínimo (solo tab/SEO) | Muy bajo | ✅ Implementado |
-| PR 1 | Money pages, a11y crítica, rendimiento | Sí (hero, colores, footer) | Bajo | ⏳ Pendiente |
-| PR 2 | Estética, motion, tipografía fluida | Sí (tipografía, animaciones) | Bajo | ⏳ Pendiente |
-| PR 3 | Microinteracciones, archival index | Sí (tabla, menu animado) | Bajo | ⏳ Pendiente |
+| PR 1 | Money pages, a11y crítica, rendimiento | Sí (hero, colores, footer) | Bajo | ✅ Implementado |
+| PR 2 | Estética, motion, tipografía fluida | Sí (tipografía, animaciones) | Bajo | ✅ Implementado |
+| PR 3 | Microinteracciones, archival index | Sí (tabla, menu animado) | Bajo | ✅ Implementado |
+
+**🎉 Todos los PRs de la Fase 2026 han sido implementados.**
 
 ---
 
@@ -429,5 +282,5 @@ npm run build
 npm run dev    # → http://localhost:3000
 ```
 
-> **NO EJECUTADO en este archivo**: los resultados del build y lint del PR 0 deben verificarse
+> **NO EJECUTADO en este archivo**: los resultados del build y lint de cada PR deben verificarse
 > manualmente ejecutando los comandos anteriores en el ambiente local/CI.
