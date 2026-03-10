@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Home, Menu, X, Phone, Mail, MapPin, Facebook, Instagram, Linkedin, MessageCircle, Youtube } from 'lucide-react';
 
 const DopDopLanding = () => {
@@ -37,12 +38,12 @@ const DopDopLanding = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header / Navbar */}
-      <header className="fixed top-0 w-full bg-black/95 backdrop-blur-sm z-50 border-b border-gray-800">
+      <header className="glass-surface fixed top-0 w-full bg-black/95 backdrop-blur-sm z-50 border-b border-gray-800">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-2">
-              <Home className="w-7 h-7" style={{ color: '#010194' }} />
+              <Home className="w-7 h-7" style={{ color: 'var(--color-brand)' }} />
               <span className="text-white text-2xl font-bold">DopDop</span>
             </div>
 
@@ -88,14 +89,16 @@ const DopDopLanding = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         {/* Background Image with Gradient Overlay */}
         <div className="absolute inset-0 z-0">
-          <img
-            // src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=80"
+          <Image
             src="/santiago-portada.jpg"
-            alt="Modern house"
-            className="w-full h-full object-cover"
+            alt="Vista de Santiago de Chile — DopDop Corredora de Propiedades"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/60 to-transparent"></div>
           <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(1,1,148,0.3) 0%, rgba(0,0,0,0.7) 100%)' }}></div>
@@ -111,6 +114,22 @@ const DopDopLanding = () => {
             <p className="text-xl md:text-2xl text-gray-200 leading-relaxed">
               Nuestro compromiso principal es proteger tu patrimonio a través de la eficiencia
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <button
+                onClick={() => handleWhatsApp('Hola, me gustaría obtener más información sobre DopDop')}
+                className="flex items-center justify-center gap-2 px-8 py-4 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                style={{ backgroundColor: 'var(--color-brand)', outlineColor: 'var(--color-brand)' }}
+              >
+                <MessageCircle className="w-5 h-5" />
+                Hablar con un experto
+              </button>
+              <button
+                onClick={() => scrollToSection('servicios')}
+                className="flex items-center justify-center gap-2 px-8 py-4 bg-white/10 text-white font-semibold rounded-lg border border-white/30 hover:bg-white/20 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Ver servicios
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -128,7 +147,7 @@ const DopDopLanding = () => {
       </section>
 
       {/* Nuestros Servicios Title */}
-      <section className="py-12 bg-gray-50">
+      <section id="servicios" className="py-12 bg-gray-50">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-black">Nuestros Servicios</h2>
         </div>
@@ -138,7 +157,7 @@ const DopDopLanding = () => {
       <section id="venta" className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
-            <h3 className="text-3xl md:text-4xl font-bold mb-8" style={{ color: '#010194' }}>
+            <h3 className="text-3xl md:text-4xl font-bold mb-8" style={{ color: 'var(--color-brand)' }}>
               Venta de Propiedades (Plan Propiedades)
             </h3>
             
@@ -151,7 +170,7 @@ const DopDopLanding = () => {
               <ServiceItem text="Nuestros valores incluyen IVA" bold />
             </div>
 
-            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: '#010194' }}>
+            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)' }}>
               <p className="text-lg font-semibold text-gray-800">
                 En una propiedad de 5.000 UF, ahorras 40 UF con nosotros comparado con el 2% tradicional
               </p>
@@ -161,7 +180,7 @@ const DopDopLanding = () => {
               <button
                 onClick={() => handleWhatsApp('Hola, me interesa el Plan de Venta de Propiedades')}
                 className="flex items-center justify-center gap-2 px-8 py-4 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
-                style={{ backgroundColor: '#010194' }}
+                style={{ backgroundColor: 'var(--color-brand)' }}
               >
                 <MessageCircle className="w-5 h-5" />
                 Contactar por WhatsApp
@@ -182,7 +201,7 @@ const DopDopLanding = () => {
       <section id="arriendo" className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
-            <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: '#010194' }}>
+            <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: 'var(--color-brand)' }}>
               Arriendo de Propiedades
             </h3>
             <p className="text-xl text-gray-700 mb-8">
@@ -197,7 +216,7 @@ const DopDopLanding = () => {
               <ServiceItem text="Nuestros valores incluyen IVA." bold />
             </div>
 
-            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: '#010194' }}>
+            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)' }}>
               <p className="text-lg font-semibold text-gray-800">
                 Al no cobrar comisión al arrendatario, atraemos a 3 veces más interesados. Esto te permite ser mucho más exigente en la evaluación de antecedentes y encontrar al arrendatario ideal más rápido.
               </p>
@@ -207,7 +226,7 @@ const DopDopLanding = () => {
               <button
                 onClick={() => handleWhatsApp('Hola, me interesa el Plan de Arriendo')}
                 className="flex items-center justify-center gap-2 px-8 py-4 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
-                style={{ backgroundColor: '#010194' }}
+                style={{ backgroundColor: 'var(--color-brand)' }}
               >
                 <MessageCircle className="w-5 h-5" />
                 Contactar por WhatsApp
@@ -228,7 +247,7 @@ const DopDopLanding = () => {
       <section id="tasacion" className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
-            <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: '#010194' }}>
+            <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: 'var(--color-brand)' }}>
               Tasación Inteligente
             </h3>
             <p className="text-xl text-gray-700 mb-8">
@@ -242,10 +261,27 @@ const DopDopLanding = () => {
               <ServiceItem text="Nuestros valores incluyen IVA." bold />
             </div>
 
-            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 rounded-r-lg" style={{ borderLeftColor: '#010194' }}>
+            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)' }}>
               <p className="text-lg font-semibold text-gray-800">
                 No adivinamos el precio de tu propiedad. Usamos tecnología para encontrar el &apos;sweet spot&apos; (punto óptimo) que maximiza tu ganancia sin castigar la velocidad de cierre.
               </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <button
+                onClick={() => handleWhatsApp('Hola, me interesa el servicio de Tasación Inteligente')}
+                className="flex items-center justify-center gap-2 px-8 py-4 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
+                style={{ backgroundColor: 'var(--color-brand)' }}
+              >
+                <MessageCircle className="w-5 h-5" />
+                Contactar por WhatsApp
+              </button>
+              <button
+                onClick={() => handleEmail('Consulta: Tasación Inteligente')}
+                className="flex items-center justify-center gap-2 px-8 py-4 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                <Mail className="w-5 h-5" />
+                Enviar Email
+              </button>
             </div>
           </div>
         </div>
@@ -255,7 +291,7 @@ const DopDopLanding = () => {
       <section id="administracion" className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
-            <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: '#010194' }}>
+            <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: 'var(--color-brand)' }}>
               Administración de Propiedades
             </h3>
             <p className="text-xl text-gray-700 mb-8">
@@ -272,7 +308,7 @@ const DopDopLanding = () => {
               <ServiceItem text="Nuestros valores incluyen IVA." bold />
             </div>
 
-            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: '#010194' }}>
+            <div className="bg-linear-to-r from-blue-50 to-blue-100 border-l-4 p-6 mb-8 rounded-r-lg" style={{ borderLeftColor: 'var(--color-border-brand)' }}>
               <p className="text-lg font-semibold text-gray-800">
                 ¿Por qué pagar más si tu propiedad vale más? En el modelo tradicional, si tu arriendo sube, tu corredor gana más. En DopDop el esfuerzo es el mismo, por eso el precio es el mismo: 1,5 UF siempre. Sin porcentajes, sin sorpresas.
               </p>
@@ -282,7 +318,7 @@ const DopDopLanding = () => {
               <button
                 onClick={() => handleWhatsApp('Hola, me interesa el Plan de Administración')}
                 className="flex items-center justify-center gap-2 px-8 py-4 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
-                style={{ backgroundColor: '#010194' }}
+                style={{ backgroundColor: 'var(--color-brand)' }}
               >
                 <MessageCircle className="w-5 h-5" />
                 Contactar por WhatsApp
@@ -312,7 +348,7 @@ const DopDopLanding = () => {
               <button
                 onClick={() => handleWhatsApp('Hola, me gustaría obtener más información sobre DopDop')}
                 className="flex items-center justify-center gap-2 px-8 py-4 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
-                style={{ backgroundColor: '#010194' }}
+                style={{ backgroundColor: 'var(--color-brand)' }}
               >
                 <MessageCircle className="w-5 h-5" />
                 Conversemos por WhatsApp
@@ -332,7 +368,7 @@ const DopDopLanding = () => {
       {/* Footer */}
       <footer className="bg-slate-950 text-gray-400 py-12">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {/* About */}
             <div>
               <div className="flex items-center space-x-2 mb-4">
@@ -421,7 +457,7 @@ const DopDopLanding = () => {
 
 const ServiceItem = ({ text, bold = false }) => (
   <div className="flex items-start gap-3">
-    <span className="text-green-500 mt-1">✓</span>
+    <span className="mt-1" style={{ color: 'var(--color-success)' }}>✓</span>
     <p className={`text-gray-700 ${bold ? 'font-semibold' : ''}`}>{text}</p>
   </div>
 );
